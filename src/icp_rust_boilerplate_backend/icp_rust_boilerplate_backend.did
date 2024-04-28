@@ -1,0 +1,20 @@
+type Error = variant { NotFound : record { msg : text } };
+type Loan = record {
+  id : nat64;
+  borrowed_at : nat64;
+  book_title : text;
+  borrower : text;
+  due_date : nat64;
+};
+type LoanPayload = record {
+  book_title : text;
+  borrower : text;
+  due_date : nat64;
+};
+type Result = variant { Ok : Loan; Err : Error };
+service : {
+  add_loan : (LoanPayload) -> (opt Loan);
+  delete_loan : (nat64) -> (Result);
+  get_loan : (nat64) -> (Result) query;
+  update_loan : (nat64, LoanPayload) -> (Result);
+}
